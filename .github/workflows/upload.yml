@@ -25,5 +25,7 @@ jobs:
         run: |
           lftp -c "
           open -u $FTP_USER,$FTP_PASS $FTP_HOST
-          mirror -R --delete --verbose ./ $FTP_PATH
+          mirror -R --delete --verbose ./ $FTP_PATH \
+             --exclude .git/ \
+            --exclude-glob *.bak
           "
