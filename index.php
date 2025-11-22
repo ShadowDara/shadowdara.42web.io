@@ -1,15 +1,5 @@
 <?php 
-$direction = $_GET['direction'] ?? '';
-
-// Send User to the decrypted Website
-if ($direction == "decrypted") {
-    header("Location: https://shadowdara.42web.io/decrypted.html");
-    exit;
-}
-// Ignore for non valid direction
-else (
-    exit;
-)
+// NO PHP here
 ?>
 
 <!DOCTYPE html>
