@@ -28,5 +28,6 @@ jobs:
           mirror -R --delete --verbose ./ $FTP_PATH \
              --exclude .git/ \
              --exclude .github/ \
+             --exclude .gitignore \
             --exclude-glob *.bak
           "
