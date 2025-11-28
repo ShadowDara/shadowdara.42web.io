@@ -1,0 +1,24 @@
+/* Style for the decrypted Page */
+
+body {
+    font-family: system-ui, Arial;
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+    /* background-color: color-mix(in srgb, #800000 100%, #000080 100%); */
+}
+
+#content {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: none;
+}
+
+.error {
+    color: #a00;
+}
+
+.hidden {
+    display: none;
+}

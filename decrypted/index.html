@@ -4,12 +4,7 @@
 <meta charset="utf-8" />
 <title>Geschützte Seite — Passwort speichern</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<style>
-  body{font-family:system-ui,Arial;padding:2rem;max-width:800px;margin:auto}
-  #content{border:1px solid #ddd;padding:1rem;margin-top:1rem;display:none}
-  .error{color:#a00}
-  .hidden{display:none}
-</style>
+<link rel="stylesheet" type="text/css" href="./../decrypted/style.css">
 </head>
 <body>
   <h1>Geschützter Inhalt</h1>
@@ -49,10 +44,14 @@ const encryptedPackage =
 // =================================================================
 
 /* ---- Hilfsfunktionen ---- */
-function b64ToBuf(b64){ return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
-function bufToStr(buf){ return new TextDecoder().decode(buf); }
+function b64ToBuf(b64) {
+  return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+}
+function bufToStr(buf) { 
+  return new TextDecoder().decode(buf);
+}
 
-async function deriveKey(password, salt, iterations=150000, keyLen=32){
+async function deriveKey(password, salt, iterations=150000, keyLen=32) {
   const enc = new TextEncoder();
   const baseKey = await crypto.subtle.importKey("raw", enc.encode(password), {name:"PBKDF2"}, false, ["deriveKey"]);
   return crypto.subtle.deriveKey(
@@ -64,7 +63,7 @@ async function deriveKey(password, salt, iterations=150000, keyLen=32){
   );
 }
 
-async function decryptAesGcm(key, iv, ciphertext, tag){
+async function decryptAesGcm(key, iv, ciphertext, tag) {
   const combined = new Uint8Array(ciphertext.length + tag.length);
   combined.set(ciphertext, 0);
   combined.set(tag, ciphertext.length);
@@ -81,7 +80,7 @@ const contentDiv = document.getElementById('content');
 const unlockBtn = document.getElementById('unlock');
 const fallbackSaveForm = document.getElementById('fallbackSaveForm');
 
-async function attemptUnlockWithPassword(pw, storeIfOk = false){
+async function attemptUnlockWithPassword(pw, storeIfOk = false) {
   status.textContent = 'Entschlüssele...';
   status.className = '';
   try {
@@ -112,7 +111,7 @@ async function attemptUnlockWithPassword(pw, storeIfOk = false){
 }
 
 /* ---- Credential Management API + Fallback ---- */
-async function tryStoreCredential(username, password){
+async function tryStoreCredential(username, password) {
   try {
     // Moderne API (Navigator Credentials) — einige Browser (Chrome, Edge, Opera) unterstützen PasswordCredential
     if (window.PasswordCredential && navigator.credentials && navigator.credentials.store) {
@@ -144,7 +143,7 @@ async function tryStoreCredential(username, password){
 }
 
 /* ---- Try to auto-fill stored credential on load ---- */
-async function tryAutoFillAndUnlock(){
+async function tryAutoFillAndUnlock() {
   // 1) Credential Management API: hole gespeicherte PasswordCredential
   try {
     if (navigator.credentials && navigator.credentials.get) {
